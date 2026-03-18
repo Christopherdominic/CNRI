@@ -1,0 +1,6 @@
+Add your images here:
+- Logo (logo.png)
+- Team photos
+- Activity photos
+- Partner logos
+- Conference banners
