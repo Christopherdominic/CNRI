@@ -31,6 +31,27 @@ cd cnri-website
 npm install
 ```
 
+### Setup Images
+
+1. **Create image folders:**
+```bash
+./setup-images.sh
+```
+
+2. **Add hero background:**
+   - Download a nutrition-themed image from [Unsplash](https://unsplash.com/s/photos/nutrition)
+   - Save as `public/hero-nutrition-bg.jpg`
+
+3. **Extract activity images from PDF:**
+   - Open your CNRI PDF presentation
+   - Screenshot the activity images from slide 14
+   - Save them in `public/activities/` folder:
+     - `townhall-breastfeeding.jpg`
+     - `community-outreach.jpg`
+     - `radio-program.jpg`
+
+See **IMAGE-SETUP.md** for detailed instructions.
+
 ### Development
 
 ```bash

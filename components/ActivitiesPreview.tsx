@@ -1,20 +1,23 @@
+'use client';
+
 import Link from 'next/link';
+import Image from 'next/image';
 
 const activities = [
   {
     title: 'Town Hall Community Awareness Program',
     description: 'Life saving benefits of breastfeeding #WorldBreastfeedingWeek2025',
-    image: '/placeholder-activity-1.jpg',
+    image: '/activities/townhall-breastfeeding.jpg',
   },
   {
     title: 'Community Outreach',
     description: 'Primary Healthcare Centers within Kaduna State',
-    image: '/placeholder-activity-2.jpg',
+    image: '/activities/community-outreach.jpg',
   },
   {
     title: 'Radio Program',
     description: 'Exclusive Breastfeeding at FRCN Supreme FM 96.1',
-    image: '/placeholder-activity-3.jpg',
+    image: '/activities/radio-program.jpg',
   },
 ];
 
@@ -30,10 +33,20 @@ export default function ActivitiesPreview() {
           {activities.map((activity, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2"
             >
-              <div className="h-48 bg-gradient-to-br from-primary-200 to-primary-300 flex items-center justify-center">
-                <span className="text-primary-700 font-semibold">Activity Image</span>
+              <div className="relative h-48 bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
+                <Image
+                  src={activity.image}
+                  alt={activity.title}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    // Fallback to gradient if image not found
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-gray-900">{activity.title}</h3>
