@@ -1,119 +1,45 @@
-# CNRI Website - Center for Nutrition Research and Innovation
+# CNRI Website
 
-A modern, responsive website for the Center for Nutrition Research and Innovation (CNRI) at Kaduna State University.
+Modern, responsive website for the Center for Nutrition Research and Innovation (CNRI) at Kaduna State University.
 
 ## Features
 
-- 🎨 Modern, clean design with green, white, and orange color palette
-- 📱 Fully responsive across all devices
-- ⚡ Built with Next.js 15 and React 18
-- 🎭 Smooth animations and transitions
-- 🧩 Component-based architecture
-- 🎯 8 comprehensive pages covering all aspects of CNRI
+- 🎨 Modern design with green/orange/white color palette
+- 📱 Fully responsive
+- ⚡ Next.js 15 + TypeScript + Tailwind CSS
+- 🎯 8 complete pages
 
-## Pages
-
-1. **Home** - Hero section, focus areas, impact stats, recent activities
-2. **About** - Mission, vision, and organizational overview
-3. **Focus Areas** - Detailed breakdown of 5 core focus areas
-4. **Programs** - 10 comprehensive programs with descriptions
-5. **Conference** - Food for Education Policy Conference details
-6. **Team** - Staff, coordinators, advisory board, and interns
-7. **Partners** - Strategic partners and collaboration opportunities
-8. **Contact** - Contact form, location, and newsletter subscription
-
-## Getting Started
-
-### Installation
+## Quick Start
 
 ```bash
-cd cnri-website
 npm install
-```
-
-### Setup Images
-
-1. **Create image folders:**
-```bash
-./setup-images.sh
-```
-
-2. **Add hero background:**
-   - Download a nutrition-themed image from [Unsplash](https://unsplash.com/s/photos/nutrition)
-   - Save as `public/hero-nutrition-bg.jpg`
-
-3. **Extract activity images from PDF:**
-   - Open your CNRI PDF presentation
-   - Screenshot the activity images from slide 14
-   - Save them in `public/activities/` folder:
-     - `townhall-breastfeeding.jpg`
-     - `community-outreach.jpg`
-     - `radio-program.jpg`
-
-See **IMAGE-SETUP.md** for detailed instructions.
-
-### Development
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000)
 
-### Build for Production
+## Setup Images
 
-```bash
-npm run build
-npm start
-```
+1. **Hero background:** Download from [Unsplash](https://unsplash.com/s/photos/nutrition) → Save as `public/hero-nutrition-bg.jpg`
+2. **Activities:** Extract 3 images from PDF slide 14 → Save in `public/activities/`
+   - `townhall-breastfeeding.jpg`
+   - `community-outreach.jpg`
+   - `radio-program.jpg`
+
+Check setup: `./setup-images.sh`
+
+## Pages
+
+- Home, About, Focus Areas, Programs, Conference, Team, Partners, Contact
+
+## Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment options.
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Fonts**: Inter (Google Fonts)
+Next.js 15 • TypeScript • Tailwind CSS • Lucide Icons
 
-## Color Palette
+---
 
-- **Primary (Green)**: Nutrition, agriculture, growth
-- **Accent (Orange)**: Health, energy, vitality
-- **White/Gray**: Clean, scientific, professional
-
-## Customization
-
-- Update content in page files (`app/*/page.tsx`)
-- Modify colors in `tailwind.config.ts`
-- Add images to `public/` folder
-- Update contact information in `components/Footer.tsx`
-
-## Project Structure
-
-```
-cnri-website/
-├── app/
-│   ├── about/
-│   ├── conference/
-│   ├── contact/
-│   ├── focus-areas/
-│   ├── partners/
-│   ├── programs/
-│   ├── team/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── globals.css
-├── components/
-│   ├── Navbar.tsx
-│   ├── Footer.tsx
-│   ├── Hero.tsx
-│   ├── FocusCards.tsx
-│   ├── ImpactSection.tsx
-│   ├── ActivitiesPreview.tsx
-│   └── CTABanner.tsx
-└── public/
-```
-
-## License
-
-© 2026 Center for Nutrition Research and Innovation. All rights reserved.
+© 2026 CNRI, Kaduna State University
