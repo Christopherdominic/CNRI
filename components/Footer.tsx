@@ -1,7 +1,25 @@
 import Link from 'next/link';
 import { Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { client } from '@/lib/sanity';
+import { SiteSettings } from '@/types/sanity';
 
-export default function Footer() {
+async function getSiteSettings(): Promise<SiteSettings | null> {
+  return client.fetch(
+    `*[_type == "siteSettings"][0] {
+      _id,
+      title,
+      description,
+      contactEmail,
+      contactPhone,
+      address,
+      socialMedia
+    }`
+  );
+}
+
+export default async function Footer() {
+  const settings = await getSiteSettings();
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -9,7 +27,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-bold text-lg mb-4">CNRI</h3>
             <p className="text-sm">
-              Center for Nutrition Research and Innovation, Kaduna State University
+              {settings?.description || 'Center for Nutrition Research and Innovation, Kaduna State University'}
             </p>
           </div>
 
@@ -28,11 +46,11 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start space-x-2">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
-                <span>Kaduna State University, Kaduna, Nigeria</span>
+                <span>{settings?.address || 'Kaduna State University, Kaduna, Nigeria'}</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail size={16} />
-                <span>info@cnri-kasu.edu.ng</span>
+                <span>{settings?.contactEmail || 'info@cnri-kasu.edu.ng'}</span>
               </li>
             </ul>
           </div>
@@ -40,18 +58,26 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-primary-400 transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="hover:text-primary-400 transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="hover:text-primary-400 transition-colors">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="hover:text-primary-400 transition-colors">
-                <Instagram size={20} />
-              </a>
+              {settings?.socialMedia?.facebook && (
+                <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">
+                  <Facebook size={20} />
+                </a>
+              )}
+              {settings?.socialMedia?.twitter && (
+                <a href={settings.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">
+                  <Twitter size={20} />
+                </a>
+              )}
+              {settings?.socialMedia?.linkedin && (
+                <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">
+                  <Linkedin size={20} />
+                </a>
+              )}
+              {settings?.socialMedia?.instagram && (
+                <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">
+                  <Instagram size={20} />
+                </a>
+              )}
             </div>
           </div>
         </div>

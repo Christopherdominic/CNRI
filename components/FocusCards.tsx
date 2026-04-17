@@ -1,39 +1,31 @@
 import { Microscope, Sprout, BookOpen, Scale, Users } from 'lucide-react';
+import { client } from '@/lib/sanity';
+import { FocusArea } from '@/types/sanity';
 
-const focusAreas = [
-  {
-    icon: Microscope,
-    title: 'Research',
-    description: 'Evidence-based research on nutrition challenges and innovative solutions',
-    color: 'bg-blue-500',
-  },
-  {
-    icon: Sprout,
-    title: 'Climate-Smart Agriculture',
-    description: 'Promoting food security through sustainable farming and preservation',
-    color: 'bg-primary-500',
-  },
-  {
-    icon: BookOpen,
-    title: 'Education & Information',
-    description: 'Building nutrition literacy and capacity across communities',
-    color: 'bg-accent-500',
-  },
-  {
-    icon: Scale,
-    title: 'Nutrition Policy',
-    description: 'Strengthening evidence-based policies and stakeholder collaboration',
-    color: 'bg-purple-500',
-  },
-  {
-    icon: Users,
-    title: 'Empowerment',
-    description: 'Supporting women, youth, and communities with opportunities',
-    color: 'bg-pink-500',
-  },
-];
+const iconMap: Record<string, any> = {
+  Microscope,
+  Sprout,
+  BookOpen,
+  Scale,
+  Users,
+};
 
-export default function FocusCards() {
+async function getFocusAreas(): Promise<FocusArea[]> {
+  return client.fetch(
+    `*[_type == "focusArea"] | order(order asc) [0...5] {
+      _id,
+      title,
+      description,
+      icon,
+      color,
+      order
+    }`
+  );
+}
+
+export default async function FocusCards() {
+  const focusAreas = await getFocusAreas();
+
   return (
     <section className="py-16 px-4 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -42,18 +34,23 @@ export default function FocusCards() {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {focusAreas.map((area, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 cursor-pointer"
-            >
-              <div className={`${area.color} w-14 h-14 rounded-lg flex items-center justify-center mb-4`}>
-                <area.icon className="text-white" size={28} />
+          {focusAreas.map((area) => {
+            const IconComponent = area.icon && iconMap[area.icon] ? iconMap[area.icon] : Microscope;
+            const colorClass = area.color || 'bg-primary-500';
+            
+            return (
+              <div
+                key={area._id}
+                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 cursor-pointer"
+              >
+                <div className={`${colorClass} w-14 h-14 rounded-lg flex items-center justify-center mb-4`}>
+                  <IconComponent className="text-white" size={28} />
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-gray-900">{area.title}</h3>
+                <p className="text-gray-600">{area.description}</p>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">{area.title}</h3>
-              <p className="text-gray-600">{area.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

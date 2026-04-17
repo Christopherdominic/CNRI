@@ -1,75 +1,33 @@
 import { User } from 'lucide-react';
+import { client, urlFor } from '@/lib/sanity';
+import { TeamMember } from '@/types/sanity';
+import Image from 'next/image';
 
-const teamMembers = [
-  {
-    name: 'Dr. Hauwau Yakubu Bako',
-    role: 'Director',
-    description: 'Provides strategic leadership, institutional representation, and oversight of all CNRI operations.',
-    category: 'leadership',
-  },
-  {
-    name: 'Hadiza Abdulsalam',
-    role: 'Program Coordinator - NECEP',
-    description: 'Leads community-focused nutrition education, advocacy, and behavior change initiatives.',
-    category: 'coordinators',
-  },
-  {
-    name: 'Nafisa Muhammad Nasir',
-    role: 'Program Coordinator - AP-PIP',
-    description: 'Coordinates research and innovations in food preservation and post-harvest technologies.',
-    category: 'coordinators',
-  },
-  {
-    name: 'Muhammad Hassan Shehu',
-    role: 'Partnership/Business Development Officer',
-    description: 'Manages institutional collaborations, stakeholder engagement, and resource mobilization.',
-    category: 'staff',
-  },
-  {
-    name: 'Abdulkadir Ashafa',
-    role: 'Monitoring and Evaluation Officer',
-    description: 'Oversees the tracking, reporting, and evaluation of CNRI\'s programs and strategic outcomes.',
-    category: 'staff',
-  },
-  {
-    name: 'Mrs. Rabia Idress',
-    role: 'Laboratory Technologist',
-    description: 'Ensures high-quality sample testing, lab procedures, and nutritional analyses.',
-    category: 'technical',
-  },
-  {
-    name: 'Mrs. Hadiza Abdulsalam',
-    role: 'Field Officer/Extension Worker',
-    description: 'Implements field-based nutrition interventions and supports community-level engagement.',
-    category: 'technical',
-  },
-  {
-    name: 'Mrs. Halima Usman',
-    role: 'ICT & Communications Officer',
-    description: 'Manages CNRI\'s digital platforms, communications strategy, and data systems.',
-    category: 'technical',
-  },
-  {
-    name: 'Mr. Lawal Shafiu',
-    role: 'ICT & Communications Officer',
-    description: 'Manages IT infrastructure and digital communications.',
-    category: 'technical',
-  },
-];
+async function getTeamMembers(): Promise<TeamMember[]> {
+  return client.fetch(
+    `*[_type == "teamMember"] | order(order asc) {
+      _id,
+      name,
+      role,
+      description,
+      category,
+      image,
+      order
+    }`
+  );
+}
 
-const advisoryBoard = [
-  'Prof. Abdullahi I. Musa',
-  'Dr. Mohammed Bello',
-  'Prof. Zainab Kwaru Muhammad',
-];
+export const revalidate = 0;
 
-const interns = [
-  'Asmau Abdulkarim',
-  'Ammar Idress Adam',
-  'Solomon Shinkut',
-];
+export default async function TeamPage() {
+  const allMembers = await getTeamMembers();
+  
+  const teamMembers = allMembers.filter(m => 
+    ['leadership', 'coordinators', 'staff', 'technical'].includes(m.category)
+  );
+  const advisoryBoard = allMembers.filter(m => m.category === 'advisory');
+  const interns = allMembers.filter(m => m.category === 'interns');
 
-export default function TeamPage() {
   return (
     <div className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -83,17 +41,29 @@ export default function TeamPage() {
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-8 text-gray-900">Core Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teamMembers.map((member, index) => (
+            {teamMembers.map((member) => (
               <div
-                key={index}
+                key={member._id}
                 className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
               >
-                <div className="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <User className="text-white" size={32} />
+                <div className="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center mb-4 mx-auto overflow-hidden">
+                  {member.image ? (
+                    <Image
+                      src={urlFor(member.image).width(80).height(80).url()}
+                      alt={member.name}
+                      width={80}
+                      height={80}
+                      className="object-cover"
+                    />
+                  ) : (
+                    <User className="text-white" size={32} />
+                  )}
                 </div>
                 <h3 className="text-lg font-bold text-center mb-2 text-gray-900">{member.name}</h3>
                 <p className="text-primary-600 text-center font-semibold mb-3 text-sm">{member.role}</p>
-                <p className="text-gray-600 text-sm text-center">{member.description}</p>
+                {member.description && (
+                  <p className="text-gray-600 text-sm text-center">{member.description}</p>
+                )}
               </div>
             ))}
           </div>
@@ -106,10 +76,10 @@ export default function TeamPage() {
               The Advisory Board provides strategic guidance and ensures alignment with national and global nutrition priorities.
             </p>
             <ul className="space-y-3">
-              {advisoryBoard.map((member, index) => (
-                <li key={index} className="flex items-center">
+              {advisoryBoard.map((member) => (
+                <li key={member._id} className="flex items-center">
                   <span className="w-2 h-2 bg-purple-600 rounded-full mr-3"></span>
-                  <span className="text-gray-800 font-medium">{member}</span>
+                  <span className="text-gray-800 font-medium">{member.name}</span>
                 </li>
               ))}
             </ul>
@@ -122,10 +92,10 @@ export default function TeamPage() {
               while building capacity in nutrition research and innovation.
             </p>
             <ul className="space-y-3">
-              {interns.map((intern, index) => (
-                <li key={index} className="flex items-center">
+              {interns.map((intern) => (
+                <li key={intern._id} className="flex items-center">
                   <span className="w-2 h-2 bg-accent-600 rounded-full mr-3"></span>
-                  <span className="text-gray-800 font-medium">{intern}</span>
+                  <span className="text-gray-800 font-medium">{intern.name}</span>
                 </li>
               ))}
             </ul>

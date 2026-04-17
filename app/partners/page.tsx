@@ -1,33 +1,28 @@
 import { Building2 } from 'lucide-react';
+import { client, urlFor } from '@/lib/sanity';
+import { Partner } from '@/types/sanity';
+import Image from 'next/image';
 
-const partners = [
-  {
-    name: 'Ministry of Budget and Planning',
-    location: 'Kaduna State',
-    description: 'Strategic planning and resource allocation partner',
-  },
-  {
-    name: 'State Nutrition Office',
-    location: 'Kaduna State',
-    description: 'Nutrition policy and program coordination',
-  },
-  {
-    name: 'KADENAP',
-    fullName: 'Kaduna State Emergency Nutrition Action Plan',
-    description: 'Emergency nutrition response and intervention',
-  },
-  {
-    name: 'Hope for Communities and Children (H4CC)',
-    description: 'Community development and child welfare',
-  },
-  {
-    name: 'KADMAM',
-    fullName: 'Kaduna State Maternal and Child Health Accountability Mechanism',
-    description: 'Maternal and child health accountability',
-  },
-];
+async function getPartners(): Promise<Partner[]> {
+  return client.fetch(
+    `*[_type == "partner"] | order(order asc) {
+      _id,
+      name,
+      fullName,
+      location,
+      description,
+      logo,
+      website,
+      order
+    }`
+  );
+}
 
-export default function PartnersPage() {
+export const revalidate = 0;
+
+export default async function PartnersPage() {
+  const partners = await getPartners();
+
   return (
     <div className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -39,13 +34,23 @@ export default function PartnersPage() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {partners.map((partner, index) => (
+          {partners.map((partner) => (
             <div
-              key={index}
+              key={partner._id}
               className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all transform hover:-translate-y-1"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <Building2 className="text-white" size={32} />
+              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4 mx-auto overflow-hidden">
+                {partner.logo ? (
+                  <Image
+                    src={urlFor(partner.logo).width(64).height(64).url()}
+                    alt={partner.name}
+                    width={64}
+                    height={64}
+                    className="object-contain"
+                  />
+                ) : (
+                  <Building2 className="text-white" size={32} />
+                )}
               </div>
               <h3 className="text-xl font-bold text-center mb-2 text-gray-900">{partner.name}</h3>
               {partner.fullName && (

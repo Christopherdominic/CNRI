@@ -1,59 +1,26 @@
 import { ArrowRight } from 'lucide-react';
+import { client } from '@/lib/sanity';
+import { Program } from '@/types/sanity';
 
-const programs = [
-  {
-    acronym: 'NPRP',
-    title: 'Nutraceuticals and Phytotherapeutic Research Program',
-    description: 'Developing natural health products and plant-based therapeutic solutions for nutrition-related diseases.',
-  },
-  {
-    acronym: 'TDFP',
-    title: 'Therapeutic Diets Formulation Program',
-    description: 'Creating specialized dietary interventions for disease management and prevention.',
-  },
-  {
-    acronym: 'GHAP',
-    title: 'Green Health Afforestation Program',
-    description: 'Promoting environmental health through strategic planting of nutritious and medicinal plants.',
-  },
-  {
-    acronym: 'AP-PIP',
-    title: 'Agro-Processing and Preservation Innovation Program',
-    description: 'Advancing food processing technologies to reduce post-harvest losses and improve food security.',
-  },
-  {
-    acronym: 'NECEP',
-    title: 'Nutrition Education and Community Engagement Program',
-    description: 'Building nutrition literacy through community outreach, training, and awareness campaigns.',
-  },
-  {
-    acronym: 'NDMP',
-    title: 'Nutrition in Disease Management Program',
-    description: 'Integrating nutrition interventions in the management of chronic and acute diseases.',
-  },
-  {
-    acronym: 'FESSP',
-    title: 'Food Entrepreneurship and SME Support Program',
-    description: 'Empowering entrepreneurs with skills and resources for nutrition-focused businesses.',
-  },
-  {
-    acronym: 'IYCN-P',
-    title: 'Infant and Young Child Nutrition Program',
-    description: 'Promoting optimal feeding practices for children under five years of age.',
-  },
-  {
-    acronym: 'AYNEP',
-    title: 'Adolescent and Youth Nutrition Empowerment Program',
-    description: 'Addressing nutritional needs and building healthy habits among adolescents and youth.',
-  },
-  {
-    acronym: 'ENHAP',
-    title: 'Elderly Nutrition and Healthy Ageing Program',
-    description: 'Supporting nutritional well-being and quality of life for the elderly population.',
-  },
-];
+async function getPrograms(): Promise<Program[]> {
+  return client.fetch(
+    `*[_type == "program"] | order(order asc) {
+      _id,
+      title,
+      acronym,
+      description,
+      slug,
+      image,
+      order
+    }`
+  );
+}
 
-export default function ProgramsPage() {
+export const revalidate = 0; // Disable caching for immediate updates
+
+export default async function ProgramsPage() {
+  const programs = await getPrograms();
+
   return (
     <div className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -65,9 +32,9 @@ export default function ProgramsPage() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {programs.map((program, index) => (
+          {programs.map((program) => (
             <div
-              key={index}
+              key={program._id}
               className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all transform hover:-translate-y-1"
             >
               <div className="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-4 py-2 rounded-lg inline-block mb-4 font-bold">

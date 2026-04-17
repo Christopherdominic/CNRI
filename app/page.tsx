@@ -3,8 +3,28 @@ import FocusCards from "@/components/FocusCards";
 import ImpactSection from "@/components/ImpactSection";
 import ActivitiesPreview from "@/components/ActivitiesPreview";
 import CTABanner from "@/components/CTABanner";
+import { client } from '@/lib/sanity';
+import { Activity } from '@/types/sanity';
 
-export default function Home() {
+async function getFeaturedActivities(): Promise<Activity[]> {
+  return client.fetch(
+    `*[_type == "activity" && featured == true] | order(date desc) [0...3] {
+      _id,
+      title,
+      description,
+      date,
+      image,
+      slug,
+      featured
+    }`
+  );
+}
+
+export const revalidate = 0;
+
+export default async function Home() {
+  const activities = await getFeaturedActivities();
+
   return (
     <>
       <Hero />
@@ -16,7 +36,7 @@ export default function Home() {
       </section>
       <FocusCards />
       <ImpactSection />
-      <ActivitiesPreview />
+      <ActivitiesPreview activities={activities} />
       <CTABanner />
     </>
   );

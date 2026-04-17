@@ -2,26 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { urlFor } from '@/lib/sanity';
+import { Activity } from '@/types/sanity';
 
-const activities = [
-  {
-    title: 'Town Hall Community Awareness Program',
-    description: 'Life saving benefits of breastfeeding #WorldBreastfeedingWeek2025',
-    image: '/activities/townhall-breastfeeding.jpg',
-  },
-  {
-    title: 'Community Outreach',
-    description: 'Primary Healthcare Centers within Kaduna State',
-    image: '/activities/community-outreach.jpg',
-  },
-  {
-    title: 'Radio Program',
-    description: 'Exclusive Breastfeeding at FRCN Supreme FM 96.1',
-    image: '/activities/radio-program.jpg',
-  },
-];
+interface ActivitiesPreviewProps {
+  activities: Activity[];
+}
 
-export default function ActivitiesPreview() {
+export default function ActivitiesPreview({ activities }: ActivitiesPreviewProps) {
   return (
     <section className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -30,22 +18,20 @@ export default function ActivitiesPreview() {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {activities.map((activity, index) => (
+          {activities.map((activity) => (
             <div
-              key={index}
+              key={activity._id}
               className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2"
             >
               <div className="relative h-48 bg-gradient-to-br from-primary-200 to-primary-300 overflow-hidden">
-                <Image
-                  src={activity.image}
-                  alt={activity.title}
-                  fill
-                  className="object-cover"
-                  onError={(e) => {
-                    // Fallback to gradient if image not found
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
+                {activity.image && (
+                  <Image
+                    src={urlFor(activity.image).width(400).height(300).url()}
+                    alt={activity.title}
+                    fill
+                    className="object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               </div>
               <div className="p-6">
