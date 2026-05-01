@@ -13,7 +13,9 @@ async function getFeaturedActivities(): Promise<Activity[]> {
       title,
       description,
       date,
+      tag,
       image,
+      gallery,
       slug,
       featured
     }`
