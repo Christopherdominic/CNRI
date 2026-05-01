@@ -13,6 +13,7 @@ export default function Navbar() {
     { href: '/focus-areas', label: 'Focus Areas' },
     { href: '/programs', label: 'Programs' },
     { href: '/courses', label: 'Courses' },
+    { href: '/activities', label: 'Activities' },
     { href: '/conference', label: 'Conference' },
     { href: '/team', label: 'Team' },
     { href: '/partners', label: 'Partners' },
