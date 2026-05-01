@@ -44,7 +44,9 @@ export interface Activity {
   title: string
   description: string
   date: string
+  tag?: string
   image: SanityImage
+  gallery?: Array<SanityImage & { caption?: string }>
   slug: {
     current: string
   }
