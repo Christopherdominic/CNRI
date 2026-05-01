@@ -31,3 +31,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Instagram source files (images already copied to public/activities/)
+/Instagram_files/
