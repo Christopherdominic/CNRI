@@ -109,3 +109,44 @@ export interface About {
     label: string
   }>
 }
+
+export interface CourseUnit {
+  code: string
+  title: string
+  credits: number
+  description?: string
+}
+
+export interface CourseSemester {
+  year: number
+  semester: number
+  label: string
+  courses: CourseUnit[]
+  totalCredits: number
+}
+
+export interface Course {
+  _id: string
+  title: string
+  acronym: string
+  slug: { current: string }
+  introduction?: any[]
+  rationale?: any[]
+  aim?: string
+  objectives?: string[]
+  targetBeneficiaries?: string[]
+  duration?: string
+  totalCredits?: number
+  admissionRequirements?: any[]
+  curriculum?: CourseSemester[]
+  assessmentStructure?: {
+    continuousAssessment: number
+    examination: number
+    minimumPass: number
+  }
+  graduationRequirements?: string[]
+  diplomaClassification?: Array<{ cgpaRange: string; classification: string }>
+  careerProspects?: string[]
+  directEntryEligibility?: string[]
+  isActive: boolean
+}
