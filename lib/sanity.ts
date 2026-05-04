@@ -5,7 +5,7 @@ export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'fcwqnwi4',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-01-01',
-  useCdn: false, // Disable CDN for immediate updates in development
+  useCdn: false,
 })
 
 const builder = imageUrlBuilder(client)
