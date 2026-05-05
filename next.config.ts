@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Prevent Sanity studio packages from being bundled server-side
+  serverExternalPackages: ['sanity', '@sanity/vision', 'styled-components'],
 };
 
 export default nextConfig;
