@@ -35,9 +35,10 @@ export default async function Footer() {
             <h4 className="text-white font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li><Link href="/about" className="hover:text-primary-400 transition-colors">About Us</Link></li>
-              <li><Link href="/programs" className="hover:text-primary-400 transition-colors">Programs</Link></li>
-              <li><Link href="/conference" className="hover:text-primary-400 transition-colors">Conference</Link></li>
-              <li><Link href="/contact" className="hover:text-primary-400 transition-colors">Contact</Link></li>
+              <li><Link href="/programs" className="hover:text-primary-400 transition-colors">Courses</Link></li>
+              <li><Link href="/activities" className="hover:text-primary-400 transition-colors">Activities &amp; Conference</Link></li>
+              <li><Link href="/team" className="hover:text-primary-400 transition-colors">Team &amp; Partners</Link></li>
+              <li><Link href="/about#contact" className="hover:text-primary-400 transition-colors">Contact</Link></li>
             </ul>
           </div>
 

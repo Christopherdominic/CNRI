@@ -29,6 +29,7 @@ export default function ActivitiesPreview({ activities }: ActivitiesPreviewProps
                     src={urlFor(activity.image).width(400).height(300).url()}
                     alt={activity.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
                   />
                 )}

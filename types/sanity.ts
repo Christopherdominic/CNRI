@@ -139,6 +139,10 @@ export interface Course {
   targetBeneficiaries?: string[]
   duration?: string
   totalCredits?: number
+  semesters?: number
+  admissionText?: string
+  feeText?: string
+  deliveryModes?: string[]
   admissionRequirements?: any[]
   curriculum?: CourseSemester[]
   assessmentStructure?: {
@@ -146,6 +150,7 @@ export interface Course {
     examination: number
     minimumPass: number
   }
+  gradingSystem?: Array<{ score: string; grade: string; point: string; remarks: string }>
   graduationRequirements?: string[]
   diplomaClassification?: Array<{ cgpaRange: string; classification: string }>
   careerProspects?: string[]

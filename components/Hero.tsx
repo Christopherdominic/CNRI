@@ -5,13 +5,7 @@ export default function Hero() {
     <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/hero-nutrition-bg.jpg')",
-            backgroundPosition: 'center',
-          }}
-        />
+        <div className="absolute inset-0 bg-cover bg-center" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/85 via-primary-800/80 to-accent-900/85"></div>
       </div>
       

@@ -9,15 +9,11 @@ export default function Navbar() {
 
   const links = [
     { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
     { href: '/focus-areas', label: 'Focus Areas' },
-    { href: '/programs', label: 'Programs' },
-    { href: '/courses', label: 'Courses' },
-    { href: '/activities', label: 'Activities' },
-    { href: '/conference', label: 'Conference' },
-    { href: '/team', label: 'Team' },
-    { href: '/partners', label: 'Partners' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/programs', label: 'Courses' },
+    { href: '/activities', label: 'Activities & Conference' },
+    { href: '/team', label: 'Team & Partners' },
+    { href: '/about', label: 'About' },
   ];
 
   return (
