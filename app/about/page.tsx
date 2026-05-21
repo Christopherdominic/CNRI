@@ -5,7 +5,7 @@ import AboutClient from './AboutClient';
 async function getAbout(): Promise<About | null> {
   return client.fetch(
     `*[_type == "about"][0] {
-      _id, overview, mission, vision, commitment, impactStats
+      _id, mission, vision, commitment
     }`
   );
 }

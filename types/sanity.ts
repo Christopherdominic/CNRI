@@ -102,14 +102,9 @@ export interface SiteSettings {
 
 export interface About {
   _id: string
-  overview: any[] // Block content
   mission: string
   vision: string
   commitment?: string
-  impactStats?: Array<{
-    value: string
-    label: string
-  }>
 }
 
 export interface CourseUnit {
