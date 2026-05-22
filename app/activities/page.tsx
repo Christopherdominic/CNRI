@@ -88,13 +88,15 @@ export default async function ActivitiesPage() {
                   <div key={activity._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                     <div className={`${color} h-2`}></div>
                     <div className="relative h-48 bg-gray-100">
-                      <Image
-                        src={urlFor(activity.image).width(600).height(400).url()}
-                        alt={activity.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover"
-                      />
+                      {activity.image?.asset && (
+                        <Image
+                          src={urlFor(activity.image).width(600).height(400).url()}
+                          alt={activity.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover"
+                        />
+                      )}
                     </div>
                     <div className="p-6">
                       {activity.tag && (
@@ -120,13 +122,17 @@ export default async function ActivitiesPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">All Activities</h2>
             <div className="columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4">
               {activities.flatMap((activity) => [
-                { src: urlFor(activity.image).width(600).height(600).url(), alt: activity.title, caption: activity.title, tag: activity.tag },
-                ...(activity.gallery ?? []).map((g) => ({
-                  src: urlFor(g).width(600).height(600).url(),
-                  alt: g.caption ?? activity.title,
-                  caption: g.caption ?? activity.title,
-                  tag: activity.tag,
-                })),
+                ...(activity.image?.asset
+                  ? [{ src: urlFor(activity.image).width(600).height(600).url(), alt: activity.title, caption: activity.title, tag: activity.tag }]
+                  : []),
+                ...(activity.gallery ?? [])
+                  .filter((g) => g?.asset)
+                  .map((g) => ({
+                    src: urlFor(g).width(600).height(600).url(),
+                    alt: g.caption ?? activity.title,
+                    caption: g.caption ?? activity.title,
+                    tag: activity.tag,
+                  })),
               ]).map((img, i) => {
                 const color = tagColors[img.tag ?? ''] ?? 'bg-primary-600';
                 return (
