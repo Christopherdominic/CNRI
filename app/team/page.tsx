@@ -52,7 +52,7 @@ export default async function TeamPage() {
                 className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
               >
                 <div className="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center mb-4 mx-auto overflow-hidden">
-                  {member.image ? (
+                  {member.image?.asset ? (
                     <Image
                       src={urlFor(member.image).width(80).height(80).url()}
                       alt={member.name}
@@ -123,7 +123,7 @@ export default async function TeamPage() {
                 className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all transform hover:-translate-y-1"
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4 mx-auto overflow-hidden">
-                  {partner.logo ? (
+                  {partner.logo?.asset ? (
                     <Image
                       src={urlFor(partner.logo).width(64).height(64).url()}
                       alt={partner.name}

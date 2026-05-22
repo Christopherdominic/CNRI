@@ -42,14 +42,14 @@ export default async function FocusAreasPage() {
         <div className="space-y-8">
           {focusAreas.map((area) => {
             const IconComponent = area.icon && iconMap[area.icon] ? iconMap[area.icon] : Microscope;
-            const colorClass = area.color || 'from-primary-500 to-primary-600';
+            const colorClass = area.color || 'bg-primary-500';
             
             return (
               <div
                 key={area._id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
-                <div className={`bg-gradient-to-r ${colorClass} p-6 text-white`}>
+                <div className={`${colorClass} p-6 text-white`}>
                   <div className="flex items-center space-x-4">
                     <div className="bg-white/20 p-3 rounded-lg">
                       <IconComponent size={32} />
