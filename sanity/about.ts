@@ -6,13 +6,6 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'overview',
-      title: 'Overview',
-      type: 'array',
-      of: [{type: 'block'}],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'mission',
       title: 'Mission',
       type: 'text',
@@ -28,20 +21,6 @@ export default defineType({
       name: 'commitment',
       title: 'Our Commitment',
       type: 'text',
-    }),
-    defineField({
-      name: 'impactStats',
-      title: 'Impact Statistics',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {name: 'value', type: 'string', title: 'Value', validation: (Rule) => Rule.required()},
-            {name: 'label', type: 'string', title: 'Label', validation: (Rule) => Rule.required()},
-          ],
-        },
-      ],
     }),
   ],
   preview: {

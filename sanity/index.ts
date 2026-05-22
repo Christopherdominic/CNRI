@@ -1,4 +1,3 @@
-import program from './program'
 import teamMember from './teamMember'
 import partner from './partner'
 import activity from './activity'
@@ -9,7 +8,6 @@ import about from './about'
 import course from './course'
 
 export const schemaTypes = [
-  program,
   teamMember,
   partner,
   activity,
